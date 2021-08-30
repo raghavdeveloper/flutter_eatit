@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "538799903356",
+    "firebase_url": "https://flutter-eatit-default-rtdb.firebaseio.com",
+    "project_id": "flutter-eatit",
+    "storage_bucket": "flutter-eatit.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:538799903356:android:014f19bcf752426d222ff9",
+        "android_client_info": {
+          "package_name": "com.example.flutter_eatit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "538799903356-7qle9el538hjnj47u2ur8e1nk3h8a17u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6tpY5BUtqaX-LVvE2JYZ9PqZsnSvMo6g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "538799903356-7qle9el538hjnj47u2ur8e1nk3h8a17u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
