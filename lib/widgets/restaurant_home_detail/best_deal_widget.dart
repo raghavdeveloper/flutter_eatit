@@ -5,7 +5,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_eatit/model/popular_item_model.dart';
 import 'package:flutter_eatit/state/main_state.dart';
-import 'package:flutter_eatit/view_model/restaurant_home_vm/restaurant_home_vm.dart';
+import 'package:flutter_eatit/view_model/restaurant_home_detail_vm/restaurant_home_details_vm.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class BestDealWidget extends StatelessWidget {
@@ -15,7 +15,7 @@ class BestDealWidget extends StatelessWidget {
     required this.mainStateController,
   }) : super(key: key);
 
-  final RestaurantHomeViewModel viewModel;
+  final RestaurantHomeDetailsViewModel viewModel;
   final MainStateController mainStateController;
 
   @override

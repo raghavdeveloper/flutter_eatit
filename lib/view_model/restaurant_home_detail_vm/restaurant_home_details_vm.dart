@@ -1,6 +1,6 @@
 import 'package:flutter_eatit/model/popular_item_model.dart';
 
-abstract class RestaurantHomeViewModel {
+abstract class RestaurantHomeDetailsViewModel {
   Future<List<PopularItemModel>> displayMostPopularByRestaurantId(
       String restaurantId);
 

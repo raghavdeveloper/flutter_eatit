@@ -35,6 +35,8 @@ dependencies:
   get: any
   auto_animated: any
   carousel_slider: any
+  flutter_zoom_drawer: any
+
 
 dev_dependencies:
   flutter_test:
