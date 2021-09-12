@@ -30,12 +30,15 @@ dependencies:
   cupertino_icons: any
   google_fonts: any
   cached_network_image: any
-  firebase_core: any
+  firebase_core: ^1.6.0
   firebase_database: any
   get: any
   auto_animated: any
   carousel_slider: any
   flutter_zoom_drawer: any
+  flutter_elegant_number_button: any
+  flutter_rating_bar: any
+  chips_choice: any
 
 
 dev_dependencies:
