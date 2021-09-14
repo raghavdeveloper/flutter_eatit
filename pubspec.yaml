@@ -39,6 +39,7 @@ dependencies:
   flutter_elegant_number_button: any
   flutter_rating_bar: any
   chips_choice: any
+  badges: any
 
 
 dev_dependencies:

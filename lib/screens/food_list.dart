@@ -5,6 +5,7 @@ import 'package:flutter_eatit/const/const.dart';
 import 'package:flutter_eatit/state/category_state.dart';
 import 'package:flutter_eatit/state/food_list_state.dart';
 import 'package:flutter_eatit/strings/food_list_string.dart';
+import 'package:flutter_eatit/widgets/common/appbar_with_cart_widget.dart';
 import 'package:flutter_eatit/widgets/common/common_widgets.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -18,13 +19,8 @@ class FoodListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('${categoryStateController.selectedCategory.value.name}',
-              style: GoogleFonts.jetBrainsMono(color: Colors.black)),
-          elevation: 10,
-          backgroundColor: Colors.white,
-          foregroundColor: Colors.black,
-          iconTheme: IconThemeData(color: Colors.black),
+        appBar: AppBarWithCartButton(
+          title: '${categoryStateController.selectedCategory.value.name}',
         ),
         body: Column(children: [
           Expanded(
