@@ -2,6 +2,7 @@ import 'package:auto_animated/auto_animated.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_eatit/const/const.dart';
+import 'package:flutter_eatit/state/cart_state.dart';
 import 'package:flutter_eatit/state/category_state.dart';
 import 'package:flutter_eatit/state/food_list_state.dart';
 import 'package:flutter_eatit/strings/food_list_string.dart';
@@ -16,6 +17,7 @@ class FoodListScreen extends StatelessWidget {
   final CategoryStateController categoryStateController = Get.find();
   final FoodListStateController foodListStateController =
       Get.put(FoodListStateController());
+  final CartStateController cartStateController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -123,8 +125,11 @@ class FoodListScreen extends StatelessWidget {
                                                               SizedBox(
                                                                   width: 50),
                                                               IconButton(
-                                                                onPressed:
-                                                                    () {},
+                                                                onPressed: () =>
+                                                                    cartStateController.addToCart(categoryStateController
+                                                                        .selectedCategory
+                                                                        .value
+                                                                        .foods[index]),
                                                                 icon: Icon(
                                                                     Icons
                                                                         .add_shopping_cart,
