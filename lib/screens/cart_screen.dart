@@ -7,6 +7,7 @@ import 'package:flutter_eatit/utils/utils.dart';
 import 'package:flutter_eatit/view_model/cart_vm/cart_view_model_imp.dart';
 import 'package:flutter_eatit/widgets/cart/cart_image_widget.dart';
 import 'package:flutter_eatit/widgets/cart/cart_info_widget.dart';
+import 'package:flutter_eatit/widgets/cart/cart_total_widget.dart';
 import 'package:flutter_elegant_number_button/flutter_elegant_number_button.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
@@ -22,7 +23,16 @@ class CartDetailScreen extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(title: Text('Cart'), actions: [
           controller.getQuantity() > 0
-              ? IconButton(onPressed: () {}, icon: Icon(Icons.clear))
+              ? IconButton(
+                  onPressed: () => Get.defaultDialog(
+                        title: clearConfirmTitleText,
+                        middleText: clearCartConfirmContextText,
+                        confirmTextColor: Colors.white,
+                        textCancel: cancelText,
+                        textConfirm: confirmText,
+                        onConfirm: () => cartViewModel.clearCart(controller),
+                      ),
+                  icon: Icon(Icons.clear))
               : Container()
         ]),
         body: controller.getQuantity() > 0
@@ -80,9 +90,22 @@ class CartDetailScreen extends StatelessWidget {
                                       caption: deleteText,
                                       icon: Icons.delete,
                                       color: Colors.red,
-                                      onTap: () {})
+                                      onTap: () {
+                                        Get.defaultDialog(
+                                            title: deleteConfirmTitleText,
+                                            middleText:
+                                                deleteCartConfirmContextText,
+                                            confirmTextColor: Colors.white,
+                                            textCancel: cancelText,
+                                            textConfirm: confirmText,
+                                            onConfirm: () => cartViewModel
+                                                .deleteCart(controller, index));
+                                      })
                                 ],
                               ))),
+                  TotalWidget(
+                    controller: controller,
+                  )
                 ]))
             : Center(child: Text(cartEmptyText)));
   }

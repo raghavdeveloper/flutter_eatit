@@ -39,10 +39,16 @@ class MenuScreen extends StatelessWidget {
           HomeMenuWidget(zoomDrawerController: zoomDrawerController),
           Divider(thickness: 1),
           MenuWidget(
+            icon: Icons.restaurant_rounded,
+            menuName: restaurantListText,
+            callback: viewModel.backToRestaurantList,
+          ),
+          Divider(thickness: 1),
+          MenuWidget(
             icon: Icons.list,
             menuName: categoriesText,
             callback: viewModel.navigateCategories,
-          )
+          ),
         ])));
   }
 }
