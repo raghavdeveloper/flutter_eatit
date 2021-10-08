@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_eatit/state/cart_state.dart';
+import 'package:flutter_eatit/state/main_state.dart';
 import 'package:flutter_eatit/strings/cart_strings.dart';
 import 'package:flutter_eatit/utils/utils.dart';
 import 'package:flutter_eatit/view_model/cart_vm/cart_view_model_imp.dart';
@@ -18,11 +19,14 @@ class CartDetailScreen extends StatelessWidget {
   final box = GetStorage();
   final CartStateController controller = Get.find();
   final CartViewModelImp cartViewModel = new CartViewModelImp();
+  final MainStateController mainStateController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title: Text('Cart'), actions: [
-          controller.getQuantity() > 0
+          controller.getQuantity(mainStateController
+                      .selectedRestaurant.value.restaurantId) >
+                  0
               ? IconButton(
                   onPressed: () => Get.defaultDialog(
                         title: clearConfirmTitleText,
@@ -35,7 +39,9 @@ class CartDetailScreen extends StatelessWidget {
                   icon: Icon(Icons.clear))
               : Container()
         ]),
-        body: controller.getQuantity() > 0
+        body: controller.getQuantity(
+                    mainStateController.selectedRestaurant.value.restaurantId) >
+                0
             ? Obx(() => Column(children: [
                   Expanded(
                       child: ListView.builder(

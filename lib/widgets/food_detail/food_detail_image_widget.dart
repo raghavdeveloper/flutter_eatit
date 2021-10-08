@@ -4,12 +4,14 @@ import 'package:flutter_eatit/const/const.dart';
 import 'package:flutter_eatit/state/cart_state.dart';
 import 'package:flutter_eatit/state/food_detail_state.dart';
 import 'package:flutter_eatit/state/food_list_state.dart';
+import 'package:flutter_eatit/state/main_state.dart';
 import 'package:flutter_eatit/utils/utils.dart';
 import 'package:get/get.dart';
 
 class FoodDetailImageWidget extends StatelessWidget {
   final CartStateController cartStateController = Get.find();
   final FoodDetailStateController foodDetailStateController = Get.find();
+  final MainStateController mainStateController = Get.find();
   FoodDetailImageWidget({
     Key? key,
     required this.foodListStateController,
@@ -54,6 +56,8 @@ class FoodDetailImageWidget extends StatelessWidget {
                     heroTag: FAB_CART_TAG,
                     onPressed: () => cartStateController.addToCart(
                         foodListStateController.selectedFood.value,
+                        mainStateController
+                            .selectedRestaurant.value.restaurantId,
                         quantity: foodDetailStateController.quantity.value),
                     child: Icon(Icons.add_shopping_cart, color: Colors.black),
                     backgroundColor: Colors.white,

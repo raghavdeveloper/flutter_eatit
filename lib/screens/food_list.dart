@@ -5,6 +5,7 @@ import 'package:flutter_eatit/const/const.dart';
 import 'package:flutter_eatit/state/cart_state.dart';
 import 'package:flutter_eatit/state/category_state.dart';
 import 'package:flutter_eatit/state/food_list_state.dart';
+import 'package:flutter_eatit/state/main_state.dart';
 import 'package:flutter_eatit/strings/food_list_string.dart';
 import 'package:flutter_eatit/widgets/common/appbar_with_cart_widget.dart';
 import 'package:flutter_eatit/widgets/common/common_widgets.dart';
@@ -15,6 +16,7 @@ import 'food_details.dart';
 
 class FoodListScreen extends StatelessWidget {
   final CategoryStateController categoryStateController = Get.find();
+  final MainStateController mainStateController = Get.find();
   final FoodListStateController foodListStateController =
       Get.put(FoodListStateController());
   final CartStateController cartStateController = Get.find();
@@ -125,11 +127,16 @@ class FoodListScreen extends StatelessWidget {
                                                               SizedBox(
                                                                   width: 50),
                                                               IconButton(
-                                                                onPressed: () =>
-                                                                    cartStateController.addToCart(categoryStateController
-                                                                        .selectedCategory
+                                                                onPressed: () => cartStateController.addToCart(
+                                                                    categoryStateController
+                                                                            .selectedCategory
+                                                                            .value
+                                                                            .foods[
+                                                                        index],
+                                                                    mainStateController
+                                                                        .selectedRestaurant
                                                                         .value
-                                                                        .foods[index]),
+                                                                        .restaurantId),
                                                                 icon: Icon(
                                                                     Icons
                                                                         .add_shopping_cart,

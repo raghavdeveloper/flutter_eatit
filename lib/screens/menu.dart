@@ -4,8 +4,9 @@ import 'package:flutter_eatit/const/const.dart';
 import 'package:flutter_eatit/strings/restaurant_home_strings.dart';
 import 'package:flutter_eatit/view_model/menu_vm/menu_view_model.dart';
 import 'package:flutter_eatit/view_model/menu_vm/menu_viewmodel_imp.dart';
-import 'package:flutter_eatit/widgets/menu/categories_menu_widget.dart';
+import 'package:flutter_eatit/widgets/menu/menu_widget.dart';
 import 'package:flutter_eatit/widgets/menu/home_menu_widget.dart';
+import 'package:flutter_eatit/widgets/menu/menu_widget_callback.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -49,6 +50,18 @@ class MenuScreen extends StatelessWidget {
             menuName: categoriesText,
             callback: viewModel.navigateCategories,
           ),
+          Spacer(),
+          Divider(thickness: 1),
+          MenuWidgetCallback(
+            icon:
+                viewModel.checkLoginState(context) ? Icons.logout : Icons.login,
+            menuName:
+                viewModel.checkLoginState(context) ? logoutText : loginText,
+            callback: viewModel.checkLoginState(context)
+                ? viewModel.logout
+                : viewModel.login,
+          ),
+          Divider(thickness: 1),
         ])));
   }
 }

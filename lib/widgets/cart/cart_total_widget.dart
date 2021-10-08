@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_eatit/state/cart_state.dart';
+import 'package:flutter_eatit/state/main_state.dart';
 import 'package:flutter_eatit/strings/cart_strings.dart';
 import 'package:flutter_eatit/utils/utils.dart';
 import 'package:flutter_eatit/widgets/cart/cart_total_item_widget.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class TotalWidget extends StatelessWidget {
-  const TotalWidget({
+  TotalWidget({
     Key? key,
     required this.controller,
   }) : super(key: key);
 
   final CartStateController controller;
+  final MainStateController mainStateController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +25,8 @@ class TotalWidget extends StatelessWidget {
             child: Column(children: [
               TotalItemWidget(
                 text: totalText,
-                value: currencyFormat.format(controller.sumCart()),
+                value: currencyFormat.format(controller.sumCart(
+                    mainStateController.selectedRestaurant.value.restaurantId)),
                 isSubTotal: false,
               ),
               Divider(
@@ -30,7 +34,8 @@ class TotalWidget extends StatelessWidget {
               ),
               TotalItemWidget(
                 text: shippingFeeText,
-                value: currencyFormat.format(controller.getShippingFee()),
+                value: currencyFormat.format(controller.getShippingFee(
+                    mainStateController.selectedRestaurant.value.restaurantId)),
                 isSubTotal: false,
               ),
               Divider(
@@ -38,7 +43,8 @@ class TotalWidget extends StatelessWidget {
               ),
               TotalItemWidget(
                 text: subTotalText,
-                value: currencyFormat.format(controller.getSubTotal()),
+                value: currencyFormat.format(controller.getSubTotal(
+                    mainStateController.selectedRestaurant.value.restaurantId)),
                 isSubTotal: true,
               ),
             ])));

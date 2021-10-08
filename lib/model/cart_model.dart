@@ -5,6 +5,7 @@ import 'food_model.dart';
 
 class CartModel extends FoodModel {
   int quantity = 0;
+  String restaurantId = '';
 
   CartModel(
       {id,
@@ -14,7 +15,8 @@ class CartModel extends FoodModel {
       size,
       addon,
       description,
-      required this.quantity})
+      required this.quantity,
+      required this.restaurantId})
       : super(
           id: id,
           name: name,
@@ -27,6 +29,7 @@ class CartModel extends FoodModel {
   factory CartModel.fromJson(Map<String, dynamic> json) {
     final food = FoodModel.fromJson(json);
     final quantity = json['quantity'];
+    final restaurantId = json['restaurantId'];
     return CartModel(
         id: food.id,
         image: food.image,
@@ -35,7 +38,8 @@ class CartModel extends FoodModel {
         addon: food.addon,
         size: food.size,
         description: food.description,
-        quantity: quantity);
+        quantity: quantity,
+        restaurantId: restaurantId);
   }
 
   Map<String, dynamic> toJson() {
@@ -48,6 +52,7 @@ class CartModel extends FoodModel {
     data['size'] = this.size.map((v) => v.toJson()).toList();
     data['addon'] = this.addon.map((v) => v.toJson()).toList();
     data['quantity'] = this.quantity;
+    data['restaurantId'] = this.restaurantId;
 
     return data;
   }
