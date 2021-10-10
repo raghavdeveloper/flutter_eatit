@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_eatit/model/cart_model.dart';
 import 'package:flutter_eatit/model/food_model.dart';
 import 'package:flutter_eatit/strings/cart_strings.dart';
@@ -11,8 +12,18 @@ class CartStateController extends GetxController {
   var cart = List<CartModel>.empty(growable: true).obs;
   final box = GetStorage();
 
-  getCart(String restaurantId) =>
-      cart.where((item) => item.restaurantId == restaurantId);
+  List<CartModel> getCartAnonymous(String restaurantId) => cart
+      .where((item) =>
+          item.restaurantId == restaurantId && (item.userUid == KEY_ANONYMOUS))
+      .toList();
+
+  List<CartModel> getCart(String restaurantId) => cart
+      .where((item) =>
+          item.restaurantId == restaurantId &&
+          (FirebaseAuth.instance.currentUser == null
+              ? item.userUid == KEY_ANONYMOUS
+              : item.userUid == FirebaseAuth.instance.currentUser!.uid))
+      .toList();
 
   addToCart(FoodModel foodModel, String restaurantId, {int quantity: 1}) async {
     try {
@@ -26,12 +37,14 @@ class CartStateController extends GetxController {
         size: foodModel.size,
         quantity: quantity,
         restaurantId: restaurantId,
+        userUid: FirebaseAuth.instance.currentUser == null
+            ? KEY_ANONYMOUS
+            : FirebaseAuth.instance.currentUser!.uid,
       );
       if (isExists(cartItem, restaurantId)) {
         //If cart item already available in cart, we will update quantity
-        var foodNeedToUpdate =
-            cart.firstWhere((element) => element.id == cartItem.id);
-        foodNeedToUpdate.quantity += quantity;
+        var foodNeedToUpdate = getCartNeedUpdate(cartItem, restaurantId);
+        if (foodNeedToUpdate != null) foodNeedToUpdate.quantity += quantity;
       } else {
         cart.add(cartItem);
       }
@@ -47,9 +60,14 @@ class CartStateController extends GetxController {
 
   isExists(CartModel cartItem, String restaurantId) => cart.any((e) =>
       e.id == cartItem.id &&
-      e.restaurantId == restaurantId); //to update quantity on cart screen
+      e.restaurantId == restaurantId &&
+      e.userUid ==
+          (FirebaseAuth.instance.currentUser == null
+              ? KEY_ANONYMOUS
+              : FirebaseAuth.instance.currentUser!
+                  .uid)); //to update quantity on cart screen
 
-  sumCart(String restaurantId) => getCart(restaurantId).cart.length == 0
+  sumCart(String restaurantId) => getCart(restaurantId).length == 0
       ? 0
       : getCart(restaurantId)
           .map((e) => e.price * e.quantity)
@@ -68,9 +86,36 @@ class CartStateController extends GetxController {
       sumCart(restaurantId) + getShippingFee(restaurantId);
 
   clearCart(String restaurantId) {
-    getCart(restaurantId).clear();
+    cart.value = getCart(restaurantId);
+    cart.clear();
     saveDatabase();
   }
 
   saveDatabase() => box.write(MY_CART_KEY, jsonEncode(cart));
+
+  void mergeCart(List<CartModel> cartItems, String restaurantId) {
+    if (cart.length > 0) {
+      cartItems.forEach((cartItem) {
+        if (isExists(cartItem, restaurantId)) {
+          var foodNeedToUpdate = getCartNeedUpdate(cartItem, restaurantId);
+          if (foodNeedToUpdate != null)
+            foodNeedToUpdate.quantity += cartItem.quantity;
+        } else {
+          var newCart = cartItem;
+          newCart.userUid = FirebaseAuth.instance.currentUser!.uid;
+          cart.add(newCart);
+        }
+      });
+    }
+  }
+
+  getCartNeedUpdate(CartModel cartItem, String restaurantId) =>
+      cart.firstWhere((e) =>
+          e.id == cartItem.id &&
+          e.restaurantId == restaurantId &&
+          e.userUid ==
+              (FirebaseAuth.instance.currentUser == null
+                  ? KEY_ANONYMOUS
+                  : FirebaseAuth.instance.currentUser!
+                      .uid)); //to update quantity on cart screen
 }
