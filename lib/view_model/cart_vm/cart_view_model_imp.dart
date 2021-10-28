@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_eatit/model/cart_model.dart';
+import 'package:flutter_eatit/screens/place_order_screen.dart';
 import 'package:flutter_eatit/state/cart_state.dart';
 import 'package:flutter_eatit/state/main_state.dart';
 import 'package:flutter_eatit/view_model/menu_vm/menu_viewmodel_imp.dart';
@@ -37,6 +38,7 @@ class CartViewModelImp implements CartViewModel {
   processCheckout(BuildContext context, List<CartModel> cart) {
     if (FirebaseAuth.instance.currentUser != null) {
       //Business of checkout
+      Get.to(() => PlaceOrderScreen());
     } else {
       menuViewModelImp.login(context);
     }
