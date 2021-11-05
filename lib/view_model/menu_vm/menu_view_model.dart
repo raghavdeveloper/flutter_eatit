@@ -8,4 +8,5 @@ abstract class MenuViewModel {
   void logout(BuildContext context);
   void navigationHome(BuildContext context);
   void navigateCart();
+  void viewOrderHistory(BuildContext context);
 }

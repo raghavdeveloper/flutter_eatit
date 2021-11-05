@@ -14,21 +14,21 @@ class OrderModel {
   int orderStatus = 0, createdDate = 0;
 
   OrderModel(
-      this.userId,
-      this.userName,
-      this.userPhone,
-      this.shippingAddress,
-      this.comment,
-      this.orderNumber,
-      this.restaurantId,
-      this.totalPayment,
-      this.finalPayment,
-      this.shippingCost,
-      this.discount,
-      this.isCod,
-      this.cartItemList,
-      this.orderStatus,
-      this.createdDate);
+      {required this.userId,
+      required this.userName,
+      required this.userPhone,
+      required this.shippingAddress,
+      required this.comment,
+      required this.orderNumber,
+      required this.restaurantId,
+      required this.totalPayment,
+      required this.finalPayment,
+      required this.shippingCost,
+      required this.discount,
+      required this.isCod,
+      required this.cartItemList,
+      required this.createdDate,
+      required this.orderStatus});
 
   OrderModel.fromJson(Map<String, dynamic> json) {
     userId = json['userId'];
@@ -43,6 +43,7 @@ class OrderModel {
     shippingCost = double.parse(json['shippingCost'].toString());
     isCod = json['isCod'] as bool;
     orderStatus = int.parse(json['orderStatus'].toString());
+    createdDate = int.parse(json['createdDate'].toString());
     if (json['cartItemList'] != null) {
       json['cartItemList'].forEach((v) {
         cartItemList.add(CartModel.fromJson(v));
@@ -64,8 +65,9 @@ class OrderModel {
     data['discount'] = this.discount;
     data['isCod'] = this.isCod;
     data['orderStatus'] = this.orderStatus;
-    data['cartItemList'] = this.cartItemList;
+    data['cartItemList'] = this.cartItemList.map((v) => v.toJson()).toList();
     data['restaurantId'] = this.restaurantId;
+    data['createdDate'] = this.createdDate;
 
     return data;
   }

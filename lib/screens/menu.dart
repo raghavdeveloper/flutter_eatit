@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_eatit/const/const.dart';
+import 'package:flutter_eatit/strings/main_strings.dart';
 import 'package:flutter_eatit/strings/restaurant_home_strings.dart';
 import 'package:flutter_eatit/view_model/menu_vm/menu_view_model.dart';
 import 'package:flutter_eatit/view_model/menu_vm/menu_viewmodel_imp.dart';
@@ -55,6 +56,12 @@ class MenuScreen extends StatelessWidget {
             icon: Icons.shopping_bag_rounded,
             callback: viewModel.navigateCart,
             menuName: cartText,
+          ),
+          Divider(thickness: 1),
+          MenuWidgetCallback(
+            icon: Icons.list,
+            callback: viewModel.viewOrderHistory,
+            menuName: orderHistoryText,
           ),
           Spacer(),
           Divider(thickness: 1),

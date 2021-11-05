@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_auth_ui/flutter_auth_ui.dart';
 import 'package:flutter_eatit/screens/cart_screen.dart';
 import 'package:flutter_eatit/screens/category_screen.dart';
+import 'package:flutter_eatit/screens/order_history_screen.dart';
 import 'package:flutter_eatit/screens/restaurant_home.dart';
 import 'package:flutter_eatit/state/cart_state.dart';
 import 'package:flutter_eatit/state/main_state.dart';
@@ -56,7 +57,7 @@ class MenuViewModelImp implements MenuViewModel {
   void logout(BuildContext context) {
     Get.defaultDialog(
       title: logoutTitle,
-      content: Text(logoutText),
+      content: Text(logoutMessageText),
       backgroundColor: Colors.white,
       cancel:
           ElevatedButton(onPressed: () => Get.back(), child: Text(cancelText)),
@@ -92,4 +93,9 @@ class MenuViewModelImp implements MenuViewModel {
 
   @override
   void navigateCart() => Get.to(() => CartDetailScreen());
+
+  @override
+  void viewOrderHistory(BuildContext context) {
+    Get.to(() => OrderHistory());
+  }
 }
